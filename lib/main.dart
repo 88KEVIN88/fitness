@@ -33,7 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 0; 
 
   final List<Widget> _pages = [
     const ProfilePage(),
@@ -269,15 +269,75 @@ class CreateWorkoutPage extends StatelessWidget {
 }
 
 class AllWorkoutsPage extends StatelessWidget {
-  const AllWorkoutsPage({super.key});
+  const AllWorkoutsPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Pagina Tutti gli Allenamenti'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tutti gli Allenamenti'),
+      ),
+      body: ListView.builder(
+        itemCount: workoutData.length,
+        itemBuilder: (context, index) {
+          final workout = workoutData[index];
+          return ListTile(
+            title: Text(workout.day),
+            subtitle: Text('Esercizi: ${workout.count}'),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Dettagli Allenamento'),
+                    content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Esercizi:'),
+                        const SizedBox(height: 8.0),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: workout.count,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text('Esercizio ${index + 1}'),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Chiudi'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
+
+class Workout {
+  final String day;
+  final int count;
+
+  Workout(this.day, this.count);
+}
+
+List<Workout> workoutData = [
+  Workout('Lunedì', 3),
+  Workout('Martedì', 5),
+  Workout('Mercoledì', 4),
+  // Aggiungi altri dati degli allenamenti qui...
+];
 
 class UserData {
   final String name;

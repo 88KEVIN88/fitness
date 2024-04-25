@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Pixel 8 pro",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "fitness",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "fitness (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "fitness (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+       
+        {
+                "name": "Flutter (USB Debug)",
+                "request": "launch",
+                "type": "dart",
+                "deviceId": "USB",
+                "program": "lib/main.dart"
+        }
+
+    ]
+}

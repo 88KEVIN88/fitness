@@ -247,23 +247,130 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class WorkoutHistoryPage extends StatelessWidget {
-  const WorkoutHistoryPage({super.key});
+  const WorkoutHistoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Pagina Cronologia Allenamenti'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cronologia allenamenti'),
+      ),
+      body: ListView.builder(
+        itemCount: workouts.length,
+        itemBuilder: (context, index) {
+          return WorkoutHistoryItem(workout: workouts[index]);
+        },
+      ),
     );
   }
 }
 
+class WorkoutHistoryItem extends StatelessWidget {
+  final Workout workout;
+
+  const WorkoutHistoryItem({required this.workout, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(workout.name),
+        subtitle: Text(workout.date.toString()),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WorkoutExerciseListPage(workout: workout),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class WorkoutExerciseListPage extends StatelessWidget {
+  final Workout workout;
+
+  const WorkoutExerciseListPage({required this.workout, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(workout.name),
+      ),
+      body: ListView.builder(
+        itemCount: workout.exercises.length,
+        itemBuilder: (context, index) {
+          return ExerciseListItem(exercise: workout.exercises[index]);
+        },
+      ),
+    );
+  }
+}
+
+class ExerciseListItem extends StatelessWidget {
+  final Exercise exercise;
+
+  const ExerciseListItem({required this.exercise, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(exercise.name),
+      subtitle: Text(exercise.description),
+    );
+  }
+}
+
+// Example data models
+class Workout {
+  final String name;
+  final DateTime date;
+  final List<Exercise> exercises;
+
+  Workout({required this.name, required this.date, required this.exercises});
+}
+
+class Exercise {
+  final String name;
+  final String description;
+
+  Exercise({required this.name, required this.description});
+}
+
+// Example data
+List<Workout> workouts = [
+  Workout(
+    name: 'Petto e tricipiti',
+    date: DateTime(2022, 1, 1),
+    exercises: [
+      Exercise(name: 'Panca piana', description: '3 serie da 10 reps'),
+      Exercise(name: 'Tricipiti cavo alto', description: '3 serie da 12 reps'),
+      Exercise(name: 'Tirate al mento bilancere sagomato', description: '3 serie da 15 reps'),
+    ],
+  ),
+  Workout(
+    name: 'Dorso e bicipiti',
+    date: DateTime(2022, 1, 3),
+    exercises: [
+      Exercise(name: 'Pull-ups', description: '3 serie da 8 reps'),
+      Exercise(name: 'Manubri', description: '3 serie da 10 reps'),
+      Exercise(name: 'Curl bilancere panca scott', description: '3 serie da 12 reps'),
+    ],
+  ),
+];
+
+
+
 class CreateWorkoutPage extends StatelessWidget {
-  const CreateWorkoutPage({super.key});
+  const CreateWorkoutPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Pagina Creazione Allenamento'),
+      child: Text('Create Workout Page'),
     );
   }
 }
@@ -273,71 +380,12 @@ class AllWorkoutsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tutti gli Allenamenti'),
-      ),
-      body: ListView.builder(
-        itemCount: workoutData.length,
-        itemBuilder: (context, index) {
-          final workout = workoutData[index];
-          return ListTile(
-            title: Text(workout.day),
-            subtitle: Text('Esercizi: ${workout.count}'),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Dettagli Allenamento'),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Esercizi:'),
-                        const SizedBox(height: 8.0),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: workout.count,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text('Esercizio ${index + 1}'),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Chiudi'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          );
-        },
-      ),
+    return const Center(
+      child: Text('Tutti gli Allenamenti'),
     );
   }
 }
 
-class Workout {
-  final String day;
-  final int count;
-
-  Workout(this.day, this.count);
-}
-
-List<Workout> workoutData = [
-  Workout('Lunedì', 3),
-  Workout('Martedì', 5),
-  Workout('Mercoledì', 4),
-  // Aggiungi altri dati degli allenamenti qui...
-];
 
 class UserData {
   final String name;

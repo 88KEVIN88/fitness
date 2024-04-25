@@ -247,13 +247,13 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class WorkoutHistoryPage extends StatelessWidget {
-  const WorkoutHistoryPage({Key? key}) : super(key: key);
+  const WorkoutHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cronologia allenamenti'),
+        title: const Text('Cronologia allenamenti'),
       ),
       body: ListView.builder(
         itemCount: workouts.length,
@@ -268,7 +268,7 @@ class WorkoutHistoryPage extends StatelessWidget {
 class WorkoutHistoryItem extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutHistoryItem({required this.workout, Key? key}) : super(key: key);
+  const WorkoutHistoryItem({required this.workout, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +292,7 @@ class WorkoutHistoryItem extends StatelessWidget {
 class WorkoutExerciseListPage extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutExerciseListPage({required this.workout, Key? key}) : super(key: key);
+  const WorkoutExerciseListPage({required this.workout, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +313,7 @@ class WorkoutExerciseListPage extends StatelessWidget {
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
 
-  const ExerciseListItem({required this.exercise, Key? key}) : super(key: key);
+  const ExerciseListItem({required this.exercise, super.key});
 
   @override
   Widget build(BuildContext context) {

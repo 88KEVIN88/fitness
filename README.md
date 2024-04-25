@@ -1,6 +1,6 @@
-# fitness
+# Fitness Tracker
 
-A new Flutter project.
+My frist flutter project
 
 ## Getting Started
 

@@ -1,13 +1,15 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,15 +27,14 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0; 
+  int _currentIndex = 0;
 
   final List<Widget> _pages = [
     const ProfilePage(),
@@ -81,10 +82,9 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -247,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class WorkoutHistoryPage extends StatelessWidget {
-  const WorkoutHistoryPage({super.key});
+  const WorkoutHistoryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +268,7 @@ class WorkoutHistoryPage extends StatelessWidget {
 class WorkoutHistoryItem extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutHistoryItem({required this.workout, super.key});
+  const WorkoutHistoryItem({required this.workout, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +292,8 @@ class WorkoutHistoryItem extends StatelessWidget {
 class WorkoutExerciseListPage extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutExerciseListPage({required this.workout, super.key});
+  const WorkoutExerciseListPage({required this.workout, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +314,7 @@ class WorkoutExerciseListPage extends StatelessWidget {
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
 
-  const ExerciseListItem({required this.exercise, super.key});
+  const ExerciseListItem({required this.exercise, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -348,7 +349,9 @@ List<Workout> workouts = [
     exercises: [
       Exercise(name: 'Panca piana', description: '3 serie da 10 reps'),
       Exercise(name: 'Tricipiti cavo alto', description: '3 serie da 12 reps'),
-      Exercise(name: 'Tirate al mento bilancere sagomato', description: '3 serie da 15 reps'),
+      Exercise(
+          name: 'Tirate al mento bilancere sagomato',
+          description: '3 serie da 15 reps'),
     ],
   ),
   Workout(
@@ -357,16 +360,26 @@ List<Workout> workouts = [
     exercises: [
       Exercise(name: 'Pull-ups', description: '3 serie da 8 reps'),
       Exercise(name: 'Manubri', description: '3 serie da 10 reps'),
-      Exercise(name: 'Curl bilancere panca scott', description: '3 serie da 12 reps'),
+      Exercise(
+          name: 'Curl bilancere panca scott', description: '3 serie da 12 reps'),
     ],
   ),
   Workout(
     name: 'Allenamento HIIT',
     date: DateTime(2022, 1, 17),
     exercises: [
-      Exercise(name: 'Jump squats', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
-      Exercise(name: 'Mountain climbers', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
-      Exercise(name: 'Burpees', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+      Exercise(
+          name: 'Jump squats',
+          description:
+              'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+      Exercise(
+          name: 'Mountain climbers',
+          description:
+              'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+      Exercise(
+          name: 'Burpees',
+          description:
+              'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
     ],
   ),
   Workout(
@@ -383,7 +396,8 @@ List<Workout> workouts = [
     date: DateTime(2022, 1, 21),
     exercises: [
       Exercise(name: 'Swing con kettlebell', description: '4 serie da 15 reps'),
-      Exercise(name: 'Affondi con salto', description: '3 serie da 12 reps per gamba'),
+      Exercise(
+          name: 'Affondi con salto', description: '3 serie da 12 reps per gamba'),
       Exercise(name: 'Curl bicipiti con manubri', description: '3 serie da 12 reps'),
     ],
   ),
@@ -398,10 +412,8 @@ List<Workout> workouts = [
   ),
 ];
 
-
-
 class CreateWorkoutPage extends StatelessWidget {
-  const CreateWorkoutPage({Key? key});
+  const CreateWorkoutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -410,18 +422,6 @@ class CreateWorkoutPage extends StatelessWidget {
     );
   }
 }
-
-class AllWorkoutsPage extends StatelessWidget {
-  const AllWorkoutsPage({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Tutti gli Allenamenti'),
-    );
-  }
-}
-
 
 class UserData {
   final String name;
@@ -442,7 +442,7 @@ UserData getUserData() {
 class WeightChart extends StatelessWidget {
   final List<WeightData> data;
 
-  const WeightChart({super.key, required this.data});
+  const WeightChart({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -491,7 +491,7 @@ List<WeightData> getWeightData(double weight) {
 class WorkoutChart extends StatelessWidget {
   final List<WorkoutData> data;
 
-  const WorkoutChart({super.key, required this.data});
+  const WorkoutChart({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -544,3 +544,136 @@ List<WorkoutData> getWorkoutData() {
     WorkoutData(day: 'Dom', count: 1),
   ];
 }
+
+
+class AllWorkoutsPage extends StatefulWidget {
+  const AllWorkoutsPage({Key? key}) : super(key: key);
+
+  @override
+  _AllWorkoutsPageState createState() => _AllWorkoutsPageState();
+}
+
+class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
+  Future<String>? _workoutsData;
+  final _searchController = TextEditingController();
+
+  Future<void> _searchWorkouts() async {
+    String muscle = _searchController.text.trim();
+    if (muscle.isEmpty) {
+      
+      return;
+    }
+
+    var headers = {
+      'x-api-key': 'LlrTjX8IV5FmNPhYjKqPIw==Do2Frt05e6fPgKdY',
+    };
+    var request = http.Request(
+      'GET',
+      Uri.parse('https://api.api-ninjas.com/v1/exercises?muscle=$muscle&Key=LlrTjX8IV5FmNPhYjKqPIw==Do2Frt05e6fPgKdY'),
+    );
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _workoutsData = response.stream.bytesToString();
+      });
+    } else {
+      print(response.reasonPhrase);
+      setState(() {
+        _workoutsData = Future.error(response.reasonPhrase!);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tutti gli Allenamenti'),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              child: TextFormField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  labelText: 'Inserisci il muscolo da cercare',
+                  border: OutlineInputBorder(),
+                ),
+                onFieldSubmitted: (value) {
+                  _searchWorkouts();
+                },
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: _searchWorkouts,
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Imposta il colore di sfondo del bottone su blu
+                foregroundColor:  Colors.white, // Imposta il colore del testo su bianco
+              ),
+            child: Text('Cerca'),
+          ),
+          Expanded(
+            child: Center(
+              child: Container(
+               color: Colors.lightBlue[100],
+              child: FutureBuilder<String>(
+                future: _workoutsData,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    final List<dynamic> exercises = jsonDecode(snapshot.data ?? '[]');
+                    return ListView.builder(
+                      itemCount: exercises.length,
+                      itemBuilder: (context, index) {
+                        final exercise = exercises[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: ListTile(
+                              title: Text(
+                                exercise['name'],
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Type: ${exercise['type']}'),
+                                  Text('Muscle: ${exercise['muscle']}'),
+                                  Text('Equipment: ${exercise['equipment']}'),
+                                  Text('Difficulty: ${exercise['difficulty']}'),
+                                  Text('Instructions: ${exercise['instructions']}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+}
+

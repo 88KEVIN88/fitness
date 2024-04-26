@@ -360,6 +360,42 @@ List<Workout> workouts = [
       Exercise(name: 'Curl bilancere panca scott', description: '3 serie da 12 reps'),
     ],
   ),
+  Workout(
+    name: 'Allenamento HIIT',
+    date: DateTime(2022, 1, 17),
+    exercises: [
+      Exercise(name: 'Jump squats', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+      Exercise(name: 'Mountain climbers', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+      Exercise(name: 'Burpees', description: 'Tabata: 20 secondi di lavoro, 10 secondi di riposo, per 4 minuti'),
+    ],
+  ),
+  Workout(
+    name: 'Allenamento a corpo libero',
+    date: DateTime(2022, 1, 19),
+    exercises: [
+      Exercise(name: 'Push-up', description: '5 serie da 15 reps'),
+      Exercise(name: 'Squat jump', description: '4 serie da 12 reps'),
+      Exercise(name: 'Plank', description: '3 serie da 45 secondi'),
+    ],
+  ),
+  Workout(
+    name: 'Allenamento della resistenza',
+    date: DateTime(2022, 1, 21),
+    exercises: [
+      Exercise(name: 'Swing con kettlebell', description: '4 serie da 15 reps'),
+      Exercise(name: 'Affondi con salto', description: '3 serie da 12 reps per gamba'),
+      Exercise(name: 'Curl bicipiti con manubri', description: '3 serie da 12 reps'),
+    ],
+  ),
+  Workout(
+    name: 'Allenamento del powerlifting',
+    date: DateTime(2022, 1, 23),
+    exercises: [
+      Exercise(name: 'Squat', description: '5 serie da 5 reps'),
+      Exercise(name: 'Panca piana', description: '5 serie da 5 reps'),
+      Exercise(name: 'Stacchi da terra', description: '5 serie da 5 reps'),
+    ],
+  ),
 ];
 
 

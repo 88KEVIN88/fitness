@@ -1,4 +1,4 @@
-import 'dart:core';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:http/http.dart' as http;
@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,10 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomePageState createState() => _HomePageState();
 }
 
@@ -82,20 +83,21 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   bool showUserData = false;
+  final weightData = getWeightData(0);
+  final workoutData = getWorkoutData();
 
   @override
   Widget build(BuildContext context) {
     final userData = getUserData();
-    final weightData = getWeightData(0);
-    final workoutData = getWorkoutData();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -247,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class WorkoutHistoryPage extends StatelessWidget {
-  const WorkoutHistoryPage({Key? key}) : super(key: key);
+  const WorkoutHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -255,8 +257,9 @@ class WorkoutHistoryPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Cronologia allenamenti'),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: workouts.length,
+        separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
           return WorkoutHistoryItem(workout: workouts[index]);
         },
@@ -268,7 +271,7 @@ class WorkoutHistoryPage extends StatelessWidget {
 class WorkoutHistoryItem extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutHistoryItem({required this.workout, Key? key}) : super(key: key);
+  const WorkoutHistoryItem({required this.workout, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -292,8 +295,7 @@ class WorkoutHistoryItem extends StatelessWidget {
 class WorkoutExerciseListPage extends StatelessWidget {
   final Workout workout;
 
-  const WorkoutExerciseListPage({required this.workout, Key? key})
-      : super(key: key);
+  const WorkoutExerciseListPage({required this.workout, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -301,8 +303,9 @@ class WorkoutExerciseListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(workout.name),
       ),
-      body: ListView.builder(
+      body: ListView.separated(
         itemCount: workout.exercises.length,
+        separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
           return ExerciseListItem(exercise: workout.exercises[index]);
         },
@@ -314,7 +317,7 @@ class WorkoutExerciseListPage extends StatelessWidget {
 class ExerciseListItem extends StatelessWidget {
   final Exercise exercise;
 
-  const ExerciseListItem({required this.exercise, Key? key}) : super(key: key);
+  const ExerciseListItem({required this.exercise, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +416,7 @@ List<Workout> workouts = [
 ];
 
 class CreateWorkoutPage extends StatelessWidget {
-  const CreateWorkoutPage({Key? key}) : super(key: key);
+  const CreateWorkoutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -442,7 +445,7 @@ UserData getUserData() {
 class WeightChart extends StatelessWidget {
   final List<WeightData> data;
 
-  const WeightChart({Key? key, required this.data}) : super(key: key);
+  const WeightChart({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -491,7 +494,7 @@ List<WeightData> getWeightData(double weight) {
 class WorkoutChart extends StatelessWidget {
   final List<WorkoutData> data;
 
-  const WorkoutChart({Key? key, required this.data}) : super(key: key);
+  const WorkoutChart({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -545,11 +548,11 @@ List<WorkoutData> getWorkoutData() {
   ];
 }
 
-
 class AllWorkoutsPage extends StatefulWidget {
-  const AllWorkoutsPage({Key? key}) : super(key: key);
+  const AllWorkoutsPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AllWorkoutsPageState createState() => _AllWorkoutsPageState();
 }
 
@@ -560,28 +563,28 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
   Future<void> _searchWorkouts() async {
     String muscle = _searchController.text.trim();
     if (muscle.isEmpty) {
-      
       return;
     }
 
     var headers = {
       'x-api-key': 'LlrTjX8IV5FmNPhYjKqPIw==Do2Frt05e6fPgKdY',
     };
-    var request = http.Request(
-      'GET',
-      Uri.parse('https://api.api-ninjas.com/v1/exercises?muscle=$muscle&Key=LlrTjX8IV5FmNPhYjKqPIw==Do2Frt05e6fPgKdY'),
+    var url = Uri.https(
+      'api.api-ninjas.com',
+      '/v1/exercises',
+      {'muscle': muscle, 'Key': 'LlrTjX8IV5FmNPhYjKqPIw==Do2Frt05e6fPgKdY'},
     );
 
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    http.Response response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
       setState(() {
-        _workoutsData = response.stream.bytesToString();
+        _workoutsData = Future.value(response.body);
       });
     } else {
-      print(response.reasonPhrase);
+      if (kDebugMode) {
+        print(response.reasonPhrase);
+      }
       setState(() {
         _workoutsData = Future.error(response.reasonPhrase!);
       });
@@ -592,7 +595,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tutti gli Allenamenti'),
+        title: const Text('Tutti gli Allenamenti'),
       ),
       body: Column(
         children: [
@@ -601,7 +604,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
             child: Form(
               child: TextFormField(
                 controller: _searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Inserisci il muscolo da cercare',
                   border: OutlineInputBorder(),
                 ),
@@ -614,26 +617,28 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
           ElevatedButton(
             onPressed: _searchWorkouts,
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Imposta il colore di sfondo del bottone su blu
-                foregroundColor:  Colors.white, // Imposta il colore del testo su bianco
-              ),
-            child: Text('Cerca'),
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Cerca'),
           ),
           Expanded(
             child: Center(
+              child: Container(
+                color: Colors.lightBlue[100],
               child: Container(
                color: Colors.lightBlue[100],
               child: FutureBuilder<String>(
                 future: _workoutsData,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     final List<dynamic> exercises = jsonDecode(snapshot.data ?? '[]');
                     return ListView.builder(
-                      itemCount: exercises.length,
+                      itemCount: exercises.length,  
                       itemBuilder: (context, index) {
                         final exercise = exercises[index];
                         return Padding(
@@ -642,7 +647,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
                             child: ListTile(
                               title: Text(
                                 exercise['name'],
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -663,6 +668,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
                 },
               ),
             ),
+          ),
           ),
           ),
         ],

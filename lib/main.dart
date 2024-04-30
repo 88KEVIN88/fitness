@@ -429,7 +429,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Workout'),
+        title: Text('Aggiugi Allenamento'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -439,7 +439,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
               onPressed: () {
                 _addExercise();
               },
-              child: Text('Add Exercise'),
+              child: Text('Aggiungi Allenamento'),
             ),
             SizedBox(height: 16),
             Expanded(
@@ -461,7 +461,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
       margin: EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         title: Text(exercise.name),
-        subtitle: Text('Sets: ${exercise.name}, Reps: ${exercise.description}'),
+        subtitle: Text('Serie: ${exercise.name}, Ripetizioni: ${exercise.description}'),
       ),
     );
   }
@@ -524,9 +524,9 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                 // Optionally, you can show an error message here.
               }
             },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+           style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
             ),
             child: Text('Add'),
           ),

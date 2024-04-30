@@ -415,17 +415,135 @@ List<Workout> workouts = [
   ),
 ];
 
-class CreateWorkoutPage extends StatelessWidget {
-  const CreateWorkoutPage({super.key});
+class CreateWorkoutPage extends StatefulWidget {
+  const CreateWorkoutPage({Key? key}) : super(key: key);
+
+  @override
+  _CreateWorkoutPageState createState() => _CreateWorkoutPageState();
+}
+
+class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
+  List<Exercise> exercises = [];
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Create Workout Page'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Workout'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                _addExercise();
+              },
+              child: Text('Add Exercise'),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: exercises.length,
+                itemBuilder: (context, index) {
+                  return _buildExerciseCard(exercises[index]);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+
+  Widget _buildExerciseCard(Exercise exercise) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        title: Text(exercise.name),
+        subtitle: Text('Sets: ${exercise.name}, Reps: ${exercise.description}'),
+      ),
+    );
+  }
+
+  void _addExercise() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      String exerciseName = '';
+      int sets = 0;
+      int reps = 0;
+
+      return AlertDialog(
+        title: Text('Aggiungi esercizio'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Nome'),
+              onChanged: (value) {
+                exerciseName = value;
+              },
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Serie'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                sets = int.tryParse(value) ?? 0;
+              },
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Ripetizioni'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                reps = int.tryParse(value) ?? 0;
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (exerciseName.isNotEmpty && sets > 0 && reps > 0) {
+                setState(() {
+                  exercises.add(
+                    Exercise(
+                      name: exerciseName,
+                      description: 'Serie: $sets, Ripetizioni: $reps',
+                    ),
+                  );
+                });
+                Navigator.pop(context);
+              } else {
+                // Optionally, you can show an error message here.
+              }
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+            ),
+            child: Text('Add'),
+          ),
+        ],
+      );
+    },
+  );
 }
 
+}
+class CustomExercise {
+  final String exerciseName;
+  final int sets;
+  final int reps;
+
+  CustomExercise({required this.exerciseName, required this.sets, required this.reps});
+}
 class UserData {
   final String name;
   final int age;

@@ -522,12 +522,12 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                 });
                 Navigator.pop(context);
               } else {
-                // Optionally, you can show an error message here.
+                
               }
             },
-           style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.blue, // Sfondo blu
+              foregroundColor: Colors.white, // Testo bianco
             ),
             child: const Text('Add'),
           ),
@@ -536,6 +536,8 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
     },
   );
 }
+
+
 
 }
 class CustomExercise {
@@ -736,7 +738,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
           ElevatedButton(
             onPressed: _searchWorkouts,
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.lightBlue[200],
               foregroundColor: Colors.white,
             ),
             child: const Text('Cerca'),

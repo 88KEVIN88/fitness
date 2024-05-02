@@ -416,9 +416,10 @@ List<Workout> workouts = [
 ];
 
 class CreateWorkoutPage extends StatefulWidget {
-  const CreateWorkoutPage({Key? key}) : super(key: key);
+  const CreateWorkoutPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _CreateWorkoutPageState createState() => _CreateWorkoutPageState();
 }
 
@@ -429,7 +430,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Aggiugi Allenamento'),
+        title: const Text('Aggiugi Allenamento'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -439,9 +440,9 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
               onPressed: () {
                 _addExercise();
               },
-              child: Text('Aggiungi Allenamento'),
+              child: const Text('Aggiungi Allenamento'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: exercises.length,
@@ -458,7 +459,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
 
   Widget _buildExerciseCard(Exercise exercise) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         title: Text(exercise.name),
         subtitle: Text('Serie: ${exercise.name}, Ripetizioni: ${exercise.description}'),
@@ -475,25 +476,25 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
       int reps = 0;
 
       return AlertDialog(
-        title: Text('Aggiungi esercizio'),
+        title: const Text('Aggiungi esercizio'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              decoration: InputDecoration(labelText: 'Nome'),
+              decoration: const InputDecoration(labelText: 'Nome'),
               onChanged: (value) {
                 exerciseName = value;
               },
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Serie'),
+              decoration: const InputDecoration(labelText: 'Serie'),
               keyboardType: TextInputType.number,
               onChanged: (value) {
                 sets = int.tryParse(value) ?? 0;
               },
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Ripetizioni'),
+              decoration: const InputDecoration(labelText: 'Ripetizioni'),
               keyboardType: TextInputType.number,
               onChanged: (value) {
                 reps = int.tryParse(value) ?? 0;
@@ -506,7 +507,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -528,7 +529,7 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
               backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
             ),
-            child: Text('Add'),
+            child: const Text('Add'),
           ),
         ],
       );

@@ -476,26 +476,30 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
       int reps = 0;
 
       return AlertDialog(
-        title: const Text('Aggiungi esercizio'),
+        backgroundColor: Colors.blue, // Sfondo blu
+        title: const Text('Aggiungi esercizio', style: TextStyle(color: Colors.white)), // Testo bianco
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              decoration: const InputDecoration(labelText: 'Nome'),
+              decoration: const InputDecoration(labelText: 'Nome', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
+              style: const TextStyle(color: Colors.white), // Testo bianco
               onChanged: (value) {
                 exerciseName = value;
               },
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Serie'),
+              decoration: const InputDecoration(labelText: 'Serie', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
               keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white), // Testo bianco
               onChanged: (value) {
                 sets = int.tryParse(value) ?? 0;
               },
             ),
             TextField(
-              decoration: const InputDecoration(labelText: 'Ripetizioni'),
+              decoration: const InputDecoration(labelText: 'Ripetizioni', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
               keyboardType: TextInputType.number,
+              style: const TextStyle(color: Colors.white), // Testo bianco
               onChanged: (value) {
                 reps = int.tryParse(value) ?? 0;
               },
@@ -507,9 +511,9 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: const Text('Cancel'),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white)), // Testo bianco
           ),
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               if (exerciseName.isNotEmpty && sets > 0 && reps > 0) {
                 setState(() {
@@ -525,21 +529,21 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
                 
               }
             },
-            style: TextButton.styleFrom(
+            style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue, // Sfondo blu
-              foregroundColor: Colors.white, // Testo bianco
             ),
-            child: const Text('Add'),
+            child: const Text('Add', style: TextStyle(color: Colors.white)), // Testo bianco
           ),
         ],
       );
     },
   );
 }
-
-
-
 }
+
+
+
+
 class CustomExercise {
   final String exerciseName;
   final int sets;

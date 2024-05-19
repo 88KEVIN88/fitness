@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -21,6 +24,51 @@ class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController workoutDayController = TextEditingController();
   final TextEditingController workoutCountController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _saveUserData() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/userData.json');
+    final data = {
+      'user': userData.toJson(),
+      'weightData': weightData.map((e) => e.toJson()).toList(),
+      'workoutData': workoutData.map((e) => e.toJson()).toList(),
+    };
+    file.writeAsString(jsonEncode(data));
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/userData.json');
+      if (await file.exists()) {
+        final contents = await file.readAsString();
+        final data = jsonDecode(contents);
+        setState(() {
+          userData = UserData.fromJson(data['user']);
+          weightData = (data['weightData'] as List)
+              .map((e) => WeightData.fromJson(e))
+              .toList();
+          workoutData = (data['workoutData'] as List)
+              .map((e) => WorkoutData.fromJson(e))
+              .toList();
+        });
+      }
+    } catch (e) {
+      // Handle error if needed
+    }
+  }
+
+  @override
+  void setState(fn) {
+    super.setState(fn);
+    _saveUserData();
+  }
 
   void _showUserModal() {
     showDialog(
@@ -175,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(width: 16.0),
                   Text(
-                    userData.name.isEmpty ? 'Modifica Profilo' : userData.name,
+                    userData.name.isEmpty ? 'Inserisci Dati Utente' : userData.name,
                     style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -234,7 +282,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 backgroundColor: Colors.blue,
               ),
               child: const Text(
-                'Modifica Profilo',
+                'Inserisci Dati Utente',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -336,6 +384,18 @@ class WeightData {
   final double weight;
 
   WeightData({required this.date, required this.weight});
+
+  Map<String, dynamic> toJson() => {
+    'date': date.toIso8601String(),
+    'weight': weight,
+  };
+
+  factory WeightData.fromJson(Map<String, dynamic> json) {
+    return WeightData(
+      date: DateTime.parse(json['date']),
+      weight: json['weight'],
+    );
+  }
 }
 
 class WorkoutChart extends StatelessWidget {
@@ -381,6 +441,18 @@ class WorkoutData {
   final int count;
 
   WorkoutData({required this.day, required this.count});
+
+  Map<String, dynamic> toJson() => {
+    'day': day,
+    'count': count,
+  };
+
+  factory WorkoutData.fromJson(Map<String, dynamic> json) {
+    return WorkoutData(
+      day: json['day'],
+      count: json['count'],
+    );
+  }
 }
 
 class UserData {
@@ -389,4 +461,18 @@ class UserData {
   final String email;
 
   UserData({required this.name, required this.age, required this.email});
+
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'age': age,
+    'email': email,
+  };
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      name: json['name'],
+      age: json['age'],
+      email: json['email'],
+    );
+  }
 }

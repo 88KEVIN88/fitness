@@ -38,7 +38,7 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
 
   Future<File> _getLocalFile() async {
     final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/workouts.json');
+    return File('${directory.path}/Workout.json');
   }
 
   void _addWorkout(Workout workout) {

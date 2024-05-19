@@ -4,12 +4,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -33,14 +31,28 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _saveUserData() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final file = File('${directory.path}/userData.json');
-    final data = {
-      'user': userData.toJson(),
-      'weightData': weightData.map((e) => e.toJson()).toList(),
-      'workoutData': workoutData.map((e) => e.toJson()).toList(),
-    };
-    file.writeAsString(jsonEncode(data));
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/userData.json');
+      final data = {
+        'user': userData.toJson(),
+        'weightData': weightData.map((e) => e.toJson()).toList(),
+        'workoutData': workoutData.map((e) => e.toJson()).toList(),
+      };
+      await file.writeAsString(jsonEncode(data));
+      print('Dati salvati correttamente su ${file.path}');
+      
+      // Verifica l'esistenza del file e stampa il suo contenuto
+      if (await file.exists()) {
+        print('Il file esiste.');
+        final fileContents = await file.readAsString();
+        print('Contenuto del file: $fileContents');
+      } else {
+        print('Errore: il file non è stato creato.');
+      }
+    } catch (e) {
+      print('Errore durante il salvataggio dei dati: $e');
+    }
   }
 
   Future<void> _loadUserData() async {
@@ -61,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
         });
       }
     } catch (e) {
-      // Handle error if needed
+      print('Errore durante il caricamento dei dati: $e');
     }
   }
 
@@ -317,7 +329,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Andamento degli allenamenti',
+              'Allenamenti settimanali',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -387,14 +399,14 @@ class WeightData {
   WeightData({required this.date, required this.weight});
 
   Map<String, dynamic> toJson() => {
-    'date': date.toIso8601String(),
-    'weight': weight,
-  };
+        'date': date.toIso8601String(),
+        'weight': weight,
+      };
 
   factory WeightData.fromJson(Map<String, dynamic> json) {
     return WeightData(
       date: DateTime.parse(json['date']),
-      weight: json['weight'],
+      weight: json['weight'].toDouble(),
     );
   }
 }
@@ -444,9 +456,9 @@ class WorkoutData {
   WorkoutData({required this.day, required this.count});
 
   Map<String, dynamic> toJson() => {
-    'day': day,
-    'count': count,
-  };
+        'day': day,
+        'count': count,
+      };
 
   factory WorkoutData.fromJson(Map<String, dynamic> json) {
     return WorkoutData(
@@ -464,10 +476,10 @@ class UserData {
   UserData({required this.name, required this.age, required this.email});
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'age': age,
-    'email': email,
-  };
+        'name': name,
+        'age': age,
+        'email': email,
+      };
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(

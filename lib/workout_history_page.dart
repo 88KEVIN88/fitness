@@ -26,7 +26,10 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
       final List<dynamic> jsonData = jsonDecode(contents);
       setState(() {
         workouts = jsonData.map((e) => Workout.fromJson(e)).toList();
+        print('Allenamenti caricati correttamente.');
       });
+    } else {
+      print('Nessun file trovato.');
     }
   }
 
@@ -34,6 +37,7 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
     final file = await _getLocalFile();
     final jsonData = workouts.map((e) => e.toJson()).toList();
     await file.writeAsString(jsonEncode(jsonData));
+    print('Allenamenti salvati correttamente su ${file.path}');
   }
 
   Future<File> _getLocalFile() async {
@@ -46,6 +50,9 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
       workouts.add(workout);
       _saveWorkouts();
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Allenamento aggiunto con successo!')),
+    );
   }
 
   void _editWorkout(Workout workout, int index) {
@@ -53,6 +60,9 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
       workouts[index] = workout;
       _saveWorkouts();
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Allenamento modificato con successo!')),
+    );
   }
 
   void _confirmDeleteWorkout(Workout workout) {
@@ -83,6 +93,9 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
       workouts.remove(workout);
       _saveWorkouts();
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Allenamento eliminato con successo!')),
+    );
   }
 
   @override
@@ -330,6 +343,9 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
     );
     widget.onAddWorkout(workout);
     Navigator.pop(context);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Allenamento salvato con successo!')),
+    );
   }
 
   @override

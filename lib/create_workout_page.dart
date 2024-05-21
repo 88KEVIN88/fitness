@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CreateWorkoutPage extends StatefulWidget {
@@ -23,10 +22,14 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
         child: Column(
           children: [
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Sfondo blu
+                foregroundColor: Colors.white, // Testo bianco
+              ),
               onPressed: () {
                 _addExercise();
               },
-              child: const Text('Aggiungi Allenamento'),
+              child: const Text('Crea Esercizio'),
             ),
             const SizedBox(height: 16),
             Expanded(
@@ -54,81 +57,76 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
   }
 
   void _addExercise() {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      String exerciseName = '';
-      int sets = 0;
-      int reps = 0;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String exerciseName = '';
+        int sets = 0;
+        int reps = 0;
 
-      return AlertDialog(
-        backgroundColor: Colors.blue, // Sfondo blu
-        title: const Text('Aggiungi esercizio', style: TextStyle(color: Colors.white)), // Testo bianco
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: const InputDecoration(labelText: 'Nome', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
-              style: const TextStyle(color: Colors.white), // Testo bianco
-              onChanged: (value) {
-                exerciseName = value;
+        return AlertDialog(
+          title: const Text('Aggiungi esercizio'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: 'Nome'),
+                onChanged: (value) {
+                  exerciseName = value;
+                },
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Serie'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  sets = int.tryParse(value) ?? 0;
+                },
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Ripetizioni'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  reps = int.tryParse(value) ?? 0;
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
               },
+              child: const Text('Cancel', style: TextStyle(color: Colors.blue)), // Testo bianco
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.blue, // Sfondo blu
+              ),
             ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Serie', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
-              keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.white), // Testo bianco
-              onChanged: (value) {
-                sets = int.tryParse(value) ?? 0;
+            ElevatedButton(
+              onPressed: () {
+                if (exerciseName.isNotEmpty && sets > 0 && reps > 0) {
+                  setState(() {
+                    exercises.add(
+                      Exercise(
+                        name: exerciseName,
+                        description: 'Serie: $sets, Ripetizioni: $reps',
+                      ),
+                    );
+                  });
+                  Navigator.pop(context);
+                }
               },
-            ),
-            TextField(
-              decoration: const InputDecoration(labelText: 'Ripetizioni', labelStyle: TextStyle(color: Colors.white)), // Testo bianco
-              keyboardType: TextInputType.number,
-              style: const TextStyle(color: Colors.white), // Testo bianco
-              onChanged: (value) {
-                reps = int.tryParse(value) ?? 0;
-              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Sfondo blu
+                foregroundColor: Colors.white, // Testo bianco
+              ),
+              child: const Text('Add'), // Testo bianco
             ),
           ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel', style: TextStyle(color: Colors.white)), // Testo bianco
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (exerciseName.isNotEmpty && sets > 0 && reps > 0) {
-                setState(() {
-                  exercises.add(
-                    Exercise(
-                      name: exerciseName,
-                      description: 'Serie: $sets, Ripetizioni: $reps',
-                    ),
-                  );
-                });
-                Navigator.pop(context);
-              } else {
-                
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue, // Sfondo blu
-            ),
-            child: const Text('Add', style: TextStyle(color: Colors.white)), // Testo bianco
-          ),
-        ],
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
-}
-
-
-
 
 class CustomExercise {
   final String exerciseName;

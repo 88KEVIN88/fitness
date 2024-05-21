@@ -105,7 +105,7 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
         title: const Text('Crea un allenamento'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: const Icon(Icons.add,color: Colors.blue,),
             onPressed: () {
               Navigator.push(
                 context,
@@ -350,51 +350,41 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle blueButtonStyle = ElevatedButton.styleFrom(
+      backgroundColor: Colors.blue, // Background color
+      foregroundColor: Colors.white, // Text color
+    );
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aggiungi Allenamento'),
+        title: const Text('Aggiungi allenamento'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Nome Allenamento',
-              ),
+              decoration: const InputDecoration(labelText: 'Nome allenamento'),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 20),
             TextField(
               controller: _exerciseNameController,
-              decoration: const InputDecoration(
-                labelText: 'Nome Esercizio',
-              ),
+              decoration: const InputDecoration(labelText: 'Nome esercizio'),
             ),
             TextField(
               controller: _exerciseDescriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Descrizione Esercizio',
-              ),
+              decoration: const InputDecoration(labelText: 'Descrizione esercizio'),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 20),
             ElevatedButton(
+              style: blueButtonStyle,
               onPressed: _addExercise,
               child: const Text('Aggiungi Esercizio'),
             ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.separated(
-                itemCount: _exercises.length,
-                separatorBuilder: (context, index) => const Divider(),
-                itemBuilder: (context, index) {
-                  return ExerciseListItem(exercise: _exercises[index]);
-                },
-              ),
-            ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 20),
             ElevatedButton(
+              style: blueButtonStyle,
               onPressed: _saveWorkout,
               child: const Text('Salva Allenamento'),
             ),

@@ -50,7 +50,7 @@ class _AllWorkoutsPageState extends State<AllWorkoutsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tutti gli Allenamenti'),
+        title: const Text('Tutti gli esercizi'),
       ),
       body: Column(
         children: [

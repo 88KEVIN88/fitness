@@ -102,7 +102,7 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cronologia allenamenti'),
+        title: const Text('Crea un allenamento'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -393,7 +393,7 @@ class _AddWorkoutPageState extends State<AddWorkoutPage> {
                 },
               ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: _saveWorkout,
               child: const Text('Salva Allenamento'),

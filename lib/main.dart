@@ -68,12 +68,12 @@ class _HomePageState extends State<HomePage> {
             label: 'Profilo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history, color: Colors.blue),
-            label: 'Cronologia',
+            icon: Icon(Icons.add, color: Colors.blue),
+            label: 'Crea Allenamenti',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: Colors.blue),
-            label: 'Crea',
+            icon: Icon(Icons.sports_outlined, color: Colors.blue),
+            label: 'Crea Esercizio',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list, color: Colors.blue),

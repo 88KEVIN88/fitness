@@ -1,4 +1,4 @@
-name: Fitness Tracker
+name: fitness
 description: "A new Flutter project."
 icon: gym.png # Path: assets/images/gym.png
 # The following line prevents the package from being accidentally published to

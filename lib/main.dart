@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( 
       title: 'Allenamento Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           selectedItemColor: Colors.blue,
         ),
       ),
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
     );
   }

@@ -95,11 +95,11 @@ class _CreateWorkoutPageState extends State<CreateWorkoutPage> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-              },
-              child: const Text('Cancel', style: TextStyle(color: Colors.blue)), // Testo bianco
+              }, // Testo bianco
               style: TextButton.styleFrom(
                 foregroundColor: Colors.blue, // Sfondo blu
               ),
+              child: const Text('Cancel', style: TextStyle(color: Colors.blue)),
             ),
             ElevatedButton(
               onPressed: () {

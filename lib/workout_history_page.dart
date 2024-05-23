@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -7,6 +8,7 @@ class WorkoutHistoryPage extends StatefulWidget {
   const WorkoutHistoryPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _WorkoutHistoryPageState createState() => _WorkoutHistoryPageState();
 }
 
@@ -26,10 +28,14 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
       final List<dynamic> jsonData = jsonDecode(contents);
       setState(() {
         workouts = jsonData.map((e) => Workout.fromJson(e)).toList();
-        print('Allenamenti caricati correttamente.');
+        if (kDebugMode) {
+          print('Allenamenti caricati correttamente.');
+        }
       });
     } else {
-      print('Nessun file trovato.');
+      if (kDebugMode) {
+        print('Nessun file trovato.');
+      }
     }
   }
 
@@ -37,7 +43,9 @@ class _WorkoutHistoryPageState extends State<WorkoutHistoryPage> {
     final file = await _getLocalFile();
     final jsonData = workouts.map((e) => e.toJson()).toList();
     await file.writeAsString(jsonEncode(jsonData));
-    print('Allenamenti salvati correttamente su ${file.path}');
+    if (kDebugMode) {
+      print('Allenamenti salvati correttamente su ${file.path}');
+    }
   }
 
   Future<File> _getLocalFile() async {
@@ -305,6 +313,7 @@ class AddWorkoutPage extends StatefulWidget {
   const AddWorkoutPage({required this.onAddWorkout, this.workout, super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AddWorkoutPageState createState() => _AddWorkoutPageState();
 }
 

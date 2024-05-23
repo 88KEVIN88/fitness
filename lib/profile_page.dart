@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:convert';
@@ -8,6 +9,7 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -40,18 +42,28 @@ class _ProfilePageState extends State<ProfilePage> {
         'workoutData': workoutData.map((e) => e.toJson()).toList(),
       };
       await file.writeAsString(jsonEncode(data));
-      print('Dati salvati correttamente su ${file.path}');
+      if (kDebugMode) {
+        print('Dati salvati correttamente su ${file.path}');
+      }
       
       // Verifica l'esistenza del file e stampa il suo contenuto
       if (await file.exists()) {
-        print('Il file esiste.');
+        if (kDebugMode) {
+          print('Il file esiste.');
+        }
         final fileContents = await file.readAsString();
-        print('Contenuto del file: $fileContents');
+        if (kDebugMode) {
+          print('Contenuto del file: $fileContents');
+        }
       } else {
-        print('Errore: il file non è stato creato.');
+        if (kDebugMode) {
+          print('Errore: il file non è stato creato.');
+        }
       }
     } catch (e) {
-      print('Errore durante il salvataggio dei dati: $e');
+      if (kDebugMode) {
+        print('Errore durante il salvataggio dei dati: $e');
+      }
     }
   }
 
@@ -73,7 +85,9 @@ class _ProfilePageState extends State<ProfilePage> {
         });
       }
     } catch (e) {
-      print('Errore durante il caricamento dei dati: $e');
+      if (kDebugMode) {
+        print('Errore durante il caricamento dei dati: $e');
+      }
     }
   }
 

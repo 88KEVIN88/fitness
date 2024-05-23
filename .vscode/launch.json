@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
 
-        { "name": "Android USB", "request": "launch", "type": "dart", "deviceId": "RFCT51K91YE", "program": "lib/main.dart" }
+        { "name": "Android USB", "request": "launch", "type": "dart", "deviceId": "RFCT51K91YE", "program": "lib/main.dart" },
         {
             "name": "Pixel 8 pro",
             "request": "launch",

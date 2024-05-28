@@ -1,25 +1,4 @@
-Applicazione multipiattaforma per la gestione del proprio allenamento 
-
-
-
-Indice:
-Introduzione………………………………………………2
-Contesto e motivazione del progetto…………………..2
-Obiettivi del progetto ...………………………………….2
-Progettazione dell’applicazione
-      -Architettura dell’applicazione……………………...5
-      -Design interfaccia utente…………………………..6
-Implementazione dell’applicazione
-      -Linguaggio di programmazione…………………...8
-      -Tecnologie utilizzate………………………………..9
-Test e validazione
-      -Tipologie di test svolti……………………………..10
-      -Risultati dei test…………………………………….11
-Risultati e conclusioni  
-      -Realizzazione degli obiettivi………………………12
-      -Riscontri rispetto alle aspettative iniziali…………13
-Bibliografia/Fonti consultate……………………………14
-Allegati……………………………………………………15
+Applicazione multipiattaforma per la gestione del proprio allenamento
 
 
 

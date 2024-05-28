@@ -83,6 +83,6 @@ In sintesi, Flutter sembra essere la scelta intelligente per il mio progetto, po
 Tecnologie utilizzate
 Inoltre, per arricchire l'esperienza dell'utente, ho integrato un'API che consente di visualizzare tutti gli allenamenti disponibili per un gruppo muscolare selezionato dall'utente. Questo aggiunge un livello di personalizzazione e flessibilità all'applicazione, consentendo agli utenti di pianificare i loro allenamenti in base alle loro esigenze specifiche. 
 
-![Descrizione dell'immagine](https://drive.google.com/file/d/1ItgTQSHC0Jt4xSNpp-54KwCcl3dcQ4lx/view?usp=drive_link)
+![Descrizione dell'immagine](UseCase.png)
 
 
